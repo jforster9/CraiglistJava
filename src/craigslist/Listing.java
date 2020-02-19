@@ -35,7 +35,7 @@ public class Listing implements Serializable {
 	String frame_size = "";
 	public Float getValue() {
 		if(value == Float.NEGATIVE_INFINITY)
-			set_sportwagen_value();
+			set_sedan_value();
 		return value;
 	}
 	static int count = 0;
@@ -106,10 +106,10 @@ public class Listing implements Serializable {
 				}
 				
 				this.num_images = listing_doc.select(".thumb").size();
-				if(this.determine_value() >= 0)
-				{
+				//if(this.determine_value() >= 0)
+				//{
 					//save_listing(this);
-				}
+				//}
 				
 			}
 			catch (Exception e) {
@@ -174,6 +174,113 @@ public class Listing implements Serializable {
 			return value;
 		}
 			
+		return value;
+	}
+	public float set_sedan_value()
+	{
+		String[] models = {"sedan", "coupe", "jetta", "honda", "mazda",
+				"toyota", "diesel", "acura", "sdn", "hybrid", "civic",
+				"volkswagon", "volkswagen", "volks", "vw"};
+		
+		String [] unwanted_models = {"kia", "scion", "lincoln", "ford", "mini cooper",
+				"buick", "chrysler", "nissan", "r350", "dodge ram", "brz",
+				"challenger", "chevrolet", "x3", "porsche", "forester", "mini clubman",
+				"cooper", "lexus", "chevy", "chevrolet", "subaru" "smart car",
+				"fiat", "infiniti", "hyundai", "suzuki", "jeep", "dodge"};
+		
+		String [] good_keywords = {"one owner", "one-owner", "1-owner", "1 owner",
+				"clean title", "low miles", "clean", "service records", "service history",
+				"bluetooth", "backup camera", "backup cam", "back up camera", "back up cam",
+				"white"};
+		
+		String good_title[] = {"2008", "2009", "2010", "2011", "2012", "2013", "2014"};
+		
+		String [] bad_keywords = {"dsg", "salvage", "rebuilt", "van", "convertible",
+				"tiptronic", "salvage title", "tptrnc", "suv", "lease", "rebuilt", "lien",
+				"truck", "pickup", "pick-up", "disabled"};
+		content = content.split("keyword")[0];
+		if(attr_title_status == "salvage")
+		{
+			value -= 1.f;
+		}
+		if(attr_odometer > 200000)
+		{
+			value = -1.f;
+			return value;
+		}
+		else if(attr_odometer > 140000)
+		{
+			value -= 3f;
+		}
+		else if(attr_odometer > 100000)
+		{
+			value -= 2.f;
+		}
+		else if(attr_odometer > 80000)
+		{
+			value -= 1f;
+		}
+		
+		if(title.contains("dsg"))
+		{
+			value -= 3.f;
+		}
+		
+		for(String key : unwanted_models) 
+		{
+			if(title.contains(key) || attr_make_model.contains(key))
+			{
+				value = -1f;
+				return value;
+			}
+		}
+		for(String key : models) 
+		{
+			if(title.contains(key) || attr_make_model.contains(key))
+				value += 2f;
+		}
+		for(String key : good_title) 
+		{
+			if(title.contains(key) || attr_make_model.contains(key))
+			{
+				value += 1f;
+				break;
+			}
+		}
+		for(String key : good_keywords) 
+		{
+			if(content.contains(key))
+				value += 1.f;
+		}
+		float bad_key_val = 0f;
+		for(String key : bad_keywords) 
+		{
+			if(content.contains(key))
+				bad_key_val -= 1.f;
+			if(bad_key_val < -2)
+			{
+				break;
+			}
+		}
+		value += bad_key_val;
+		for(String key : bad_keywords) 
+		{
+			if(title.contains(key) || attr_make_model.contains(key)
+					|| content.contains(key))
+				value -= 1.f;
+		}
+		if(price < 6000 && price > 0)
+		{
+			value += 1.f;
+		}
+		if(price > 6000)
+		{
+			value -= 1.f;
+		}
+		if(price > 7000)
+		{
+			value = -1.f;
+		}
 		return value;
 	}
 	public float set_sportwagen_value()

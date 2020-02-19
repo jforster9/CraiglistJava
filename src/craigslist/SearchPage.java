@@ -3,7 +3,7 @@ package craigslist;
 public class SearchPage {
 	enum Category 
 	{ 
-	    CARS_AND_TRUCKS, BICYCLES; 
+	    CARS_AND_TRUCKS, BICYCLES;
 	} 
 	String region;
 	String query;
