@@ -3,6 +3,7 @@ package craigslist;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -10,7 +11,7 @@ import java.util.Scanner;
 import java.util.Vector;
 import java.util.Comparator;
 
-public static class Configs implements Serializable
+public class Configs implements Serializable
 {
 	private static final String CONFIG_DIR = "config/";
 	private static final String GOOD_KEYWORDS_CONFIG = "good_keywords.cfg";
@@ -26,12 +27,12 @@ public static class Configs implements Serializable
 
 	private static String[] read_string_config(String configFile)
 	{
-		String[] configData;
+		String[] configData = null;
 		Scanner in;
 		try
 		{
 			in = new Scanner(new FileReader(CONFIG_DIR+configFile));
-			while(int.hasNext())
+			while(in.hasNext())
 			{
 				configData = in.next().split("\n");
 			}
@@ -67,6 +68,7 @@ public static class Configs implements Serializable
 
 	public static String[] read_years()
 	{
+		return null;
 	}
 
 	public static String[] read_transmission()
@@ -74,9 +76,9 @@ public static class Configs implements Serializable
 		return null;
 	}
 
-	public static Int[] read_price()
+	public static int[] read_price()
 	{
-		Int[] prices;
+		int[] prices = null;
 
 		Scanner in;
 		try
@@ -91,9 +93,9 @@ public static class Configs implements Serializable
 		return prices;
 	}
 
-	public static Int[] read_odos()
+	public static int[] read_odos()
 	{
-		Int[] odos;
+		int[] odos = null;
 
 		Scanner in;
 		try

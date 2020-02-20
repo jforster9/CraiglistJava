@@ -185,7 +185,7 @@ public class Listing implements Serializable {
 		String [] unwanted_models = {"kia", "scion", "lincoln", "ford", "mini cooper",
 				"buick", "chrysler", "nissan", "r350", "dodge ram", "brz",
 				"challenger", "chevrolet", "x3", "porsche", "forester", "mini clubman",
-				"cooper", "lexus", "chevy", "chevrolet", "subaru" "smart car",
+				"cooper", "lexus", "chevy", "chevrolet", "subaru", "smart car",
 				"fiat", "infiniti", "hyundai", "suzuki", "jeep", "dodge"};
 		
 		String [] good_keywords = {"one owner", "one-owner", "1-owner", "1 owner",
@@ -302,8 +302,8 @@ public class Listing implements Serializable {
 		String [] man_trans_keys = {"manual transmission", "6 speed manual", "manual", "6 speed", "6-speed",
 				"6mt", "six speed", "stick shift", "manual trans", "transmission manual", "transmission: manual"};
 		
-		String [] man_trans_title = {"6sp", "6speed", "6 speed", "manual", "6 sp", "six speed", "6-sp",
-				"6-speed", "6mt", "6m"};
+//		String [] man_trans_title = {"6sp", "6speed", "6 speed", "manual", "6 sp", "six speed", "6-sp",
+//				"6-speed", "6mt", "6m"};
 		
 		String [] bad_keywords = {"dsg", "salvage", "rebuilt", "sedan", "sdn", "convertible", "automatic",
 				"tiptronic", "automatic transmission", "salvage title", "6a", "transmission: automatic",

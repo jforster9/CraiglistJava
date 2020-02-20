@@ -6,12 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Scanner;
-import java.util.Vector;
 
 import javax.mail.*;
 import javax.mail.internet.*;
-
-
 
 public class SendMail {
 	Map<String, String> config = new HashMap<String, String>();
