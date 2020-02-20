@@ -24,53 +24,70 @@ public static class Configs implements Serializable
 	private static final String PRICES_CONFIG = "prices.cfg";
 	private static final String ODO_CONFIG = "odo.cfg";
 
+	private static String[] read_string_config(String configFile)
+	{
+		String[] configData;
+		Scanner in;
+		try
+		{
+			in = new Scanner(new FileReader(CONFIG_DIR+configFile));
+			while(int.hasNext())
+			{
+				configData = in.next().split("\n");
+			}
+			in.close();
+		}
+		catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+			System.out.println("Could not read " + configFile + ".");
+		}
+		return configData;
+	}
+
 	public static String[] read_good_keywords()
 	{
-		String[] goodKeywords;
-
-		return goodKeyWords;
+		return read_string_config(GOOD_KEYWORDS_CONFIG);
 	}
 
 	public static String[] read_bad_keywords()
 	{
-		String[] badKeyWords;
-
-		return badKeyWords;
-	}
-
-	public static String[] read_years()
-	{
-		String[] years;
-
-		return years;
+		return read_string_config(BAD_KEYWORDS_CONFIG);
 	}
 
 	public static String[] read_models()
 	{
-		String[] models;
-
-		return models;
+		return read_string_config(MODELS_CONFIG);
 	}
 
 	public static String[] read_unwanted_models()
 	{
-		String[] unwanted_models;
+		return read_string_config(UNWANTED_MODELS_CONFIG);
+	}
 
-		return unwanted_models;
+	public static String[] read_years()
+	{
 	}
 
 	public static String[] read_transmission()
 	{
-		String transmission;
-		String[] transmissionKeywords; 
-
-		return transmissionKeywords;
+		return null;
 	}
 
 	public static Int[] read_price()
 	{
 		Int[] prices;
 
+		Scanner in;
+		try
+		{
+			in = new Scanner(new FileReader(CONFIG_DIR+PRICES_CONFIG));
+		}
+		catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+			System.out.println("Could not read " + PRICES_CONFIG + ".");
+		}
 		return prices;
 	}
 
@@ -78,6 +95,18 @@ public static class Configs implements Serializable
 	{
 		Int[] odos;
 
+		Scanner in;
+		try
+		{
+			in = new Scanner(new FileReader(CONFIG_DIR+ODO_CONFIG));
+
+			in.close();
+		}
+		catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+			System.out.println("Could not read " + ODO_CONFIG + ".");
+		}
 		return odos;
 	}
 };
