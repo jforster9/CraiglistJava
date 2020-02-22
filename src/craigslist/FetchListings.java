@@ -280,9 +280,7 @@ public class FetchListings {
 		// Regions to search
 		// ex: monterey, sfbay, losangeles, orangecounty
 		// bakersfield, sacramento, slo, sandiego
-		String[] regions = {"losangeles", "orangecounty", 
-				"monterey", "sfbay", "sacramento",
-				"bakersfield", "slo", "sandiego"};
+		String[] regions = {"sfbay", "sacramento"};
 
 		// search query (words you type into the search bar)
 		// , "audi avant", "audi wagon", "subaru legacy wagon", 

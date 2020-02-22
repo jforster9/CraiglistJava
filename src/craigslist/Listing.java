@@ -269,15 +269,15 @@ public class Listing implements Serializable {
 					|| content.contains(key))
 				value -= 1.f;
 		}
-		if(price < 6000 && price > 0)
+		if(price < 8700 && price > 0)
 		{
 			value += 1.f;
 		}
-		if(price > 6000)
+		if(price > 8700)
 		{
 			value -= 1.f;
 		}
-		if(price > 7000)
+		if(price > 9000)
 		{
 			value = -1.f;
 		}
