@@ -180,37 +180,36 @@ public class Listing implements Serializable {
 	{
 		String[] models = {"sedan", "coupe", "jetta", "honda", "mazda",
 				"toyota", "diesel", "acura", "sdn", "hybrid", "civic",
-				"volkswagon", "volkswagen", "volks", "vw"};
+				"volkswagon", "volkswagen", "volks", "vw", "corolla",
+				"camry", "jetta", "mazda3", "mazda6", "mazda 3", "mazda 6"};
 		
 		String [] unwanted_models = {"kia", "scion", "lincoln", "ford", "mini cooper",
 				"buick", "chrysler", "nissan", "r350", "dodge ram", "brz",
 				"challenger", "chevrolet", "x3", "porsche", "forester", "mini clubman",
-				"cooper", "lexus", "chevy", "chevrolet", "subaru" "smart car",
+				"cooper", "lexus", "chevy", "subaru", "smart car",
 				"fiat", "infiniti", "hyundai", "suzuki", "jeep", "dodge"};
 		
 		String [] good_keywords = {"one owner", "one-owner", "1-owner", "1 owner",
 				"clean title", "low miles", "clean", "service records", "service history",
 				"bluetooth", "backup camera", "backup cam", "back up camera", "back up cam",
-				"white"};
+				"white", "aux", "car fax", "carfax"};
 		
-		String good_title[] = {"2008", "2009", "2010", "2011", "2012", "2013", "2014"};
+		String good_title[] = {"2008", "2009", "2010", "2011", "2012", "2013", "2014",
+								"2015", "2016", "2017", "2018"};
 		
-		String [] bad_keywords = {"dsg", "salvage", "rebuilt", "van", "convertible",
-				"tiptronic", "salvage title", "tptrnc", "suv", "lease", "rebuilt", "lien",
-				"truck", "pickup", "pick-up", "disabled"};
+		String [] bad_keywords = {"dsg", "salvage", "rebuilt", "van", "minivan", "convertible",
+				"tiptronic", "salvage title", "tptrnc", "suv", "lease", "lien",
+				"truck", "disabled", "mini-van"};
 		content = content.split("keyword")[0];
 		if(attr_title_status == "salvage")
-		{
-			value -= 1.f;
-		}
-		if(attr_odometer > 200000)
 		{
 			value = -1.f;
 			return value;
 		}
-		else if(attr_odometer > 140000)
+		if(attr_odometer > 145000)
 		{
-			value -= 3f;
+			value = -1.f;
+			return value;
 		}
 		else if(attr_odometer > 100000)
 		{

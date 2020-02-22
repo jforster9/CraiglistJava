@@ -21,8 +21,8 @@ import org.apache.commons.io.FileUtils;
 public class FetchListings {
 	static int MAX_THREADS = 8;
 	static int MAX_REQUESTS_PER_RUN = 1000;
-	static boolean DEV_MODE = false;
-	static boolean GEN_HTML = false;
+	static boolean DEV_MODE = true;
+	static boolean GEN_HTML = true;
 	static ListingDB db;
 	static Vector<Listing> listings = new Vector<Listing>();
 	static Vector<SearchPage> search_pages = new Vector<SearchPage>();
@@ -289,8 +289,10 @@ public class FetchListings {
 //		, "dodge magnum",
 //		"srt8", "325it", "328it", "328i", "325i", "bmw 328", "bmw 325", "e46 wagon",
 //		"328", "bmw touring", "bmw estate", "vw wagon", "volkswagen wagon", 
-		String[] queries = {"sportwagen", "sportwagon", "jetta wagon", "vw wagon", "volkswagen wagon",
-				"wagon", "sportswagen", "sportswagon", "jsw"};
+		String[] queries = {"vw", "volkswagen", "jetta", "volkswagon", "civic",
+				"honda civic", "mazda 3", "toyota", "honda", "mazda", "corolla",
+				"camry", "toyota corolla", "toyota camry", "mazda 6", "sedan", 
+				"coupe", "accord", "mazda3", "mazda6"};
 //		String[] queries = {"sportwagen", "wagon"};
 		// pages to get per query
 		if(args.length == 1)
@@ -307,7 +309,7 @@ public class FetchListings {
 		init();
 		Vector<Listing> listings;
 		// pull new listings from craigslist? (false to use ones from DB)
-		boolean getNewListings = true;
+		boolean getNewListings = false;
 		if(getNewListings)
 		{
 			if(DEV_MODE)
@@ -330,14 +332,13 @@ public class FetchListings {
 		System.out.println("Loaded " + Integer.toString(listings.size()) + " listings from DB");
 		for(Listing listing : listings)
 		{
-			listing.set_sportwagen_value();
+			listing.set_sedan_value();
 		}
 		System.out.println("Done setting values.");
 		// sort by value (highest first)
 		listings.sort(new ValueSorter());
 		Collections.reverse(listings);
 		
-
 		Vector<Listing> dbListings = null;
 		if(getNewListings)
 		{
