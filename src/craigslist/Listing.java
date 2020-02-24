@@ -178,6 +178,10 @@ public class Listing implements Serializable {
 	}
 	public float set_sedan_value()
 	{
+		if (Float.NEGATIVE_INFINITY == value)
+		{
+			value = 0f;
+		}
 		String[] models = {"sedan", "coupe", "jetta", "honda", "mazda",
 				"toyota", "diesel", "acura", "sdn", "hybrid", "civic",
 				"volkswagon", "volkswagen", "volks", "vw", "corolla",
@@ -186,7 +190,7 @@ public class Listing implements Serializable {
 		String [] unwanted_models = {"kia", "scion", "lincoln", "ford", "mini cooper",
 				"buick", "chrysler", "nissan", "r350", "dodge ram", "brz",
 				"challenger", "chevrolet", "x3", "porsche", "forester", "mini clubman",
-				"cooper", "lexus", "chevy", "subaru", "smart car",
+				"cooper", "lexus", "chevy", "subaru", "smart car", "4Runner",
 				"fiat", "infiniti", "hyundai", "suzuki", "jeep", "dodge"};
 		
 		String [] good_keywords = {"one owner", "one-owner", "1-owner", "1 owner",
@@ -197,16 +201,19 @@ public class Listing implements Serializable {
 		String good_title[] = {"2008", "2009", "2010", "2011", "2012", "2013", "2014",
 								"2015", "2016", "2017", "2018"};
 		
+		String [] man_trans_keys = {"manual transmission", "6 speed manual", "manual", "6 speed", "6-speed",
+				"6mt", "six speed", "stick shift", "manual trans", "transmission manual", "transmission: manual"};
+		
 		String [] bad_keywords = {"dsg", "salvage", "rebuilt", "van", "minivan", "convertible",
 				"tiptronic", "salvage title", "tptrnc", "suv", "lease", "lien",
-				"truck", "disabled", "mini-van"};
+				"truck", "disabled", "mini-van", "dealership"};
 		content = content.split("keyword")[0];
-		if(attr_title_status == "salvage")
+		if(attr_title_status.contentEquals("salvaged"))
 		{
 			value = -1.f;
 			return value;
 		}
-		if(attr_odometer > 145000)
+		if(attr_odometer > 125000)
 		{
 			value = -1.f;
 			return value;
@@ -239,6 +246,14 @@ public class Listing implements Serializable {
 				value += 2f;
 		}
 		for(String key : good_title) 
+		{
+			if(title.contains(key) || attr_make_model.contains(key))
+			{
+				value += 1f;
+				break;
+			}
+		}
+		for(String key : man_trans_keys)
 		{
 			if(title.contains(key) || attr_make_model.contains(key))
 			{
@@ -393,15 +408,20 @@ public class Listing implements Serializable {
 			}
 		}
 		value += bad_key_val;
+		bad_key_val = 0f;
 		for(String key : bad_keywords) 
 		{
-			if(title.contains(key) || attr_make_model.contains(key)
-					|| content.contains(key))
-				value -= 1.f;
+			if(title.contains(key) || attr_make_model.contains(key))
+				bad_key_val -= 1.f;
+			if(bad_key_val < -2)
+			{
+				break;
+			}
 		}
+		value += bad_key_val;
 		if(attr_transmission.contains("automatic"))
 			value -= 2f;
-		if(price < 10000 && price > 0)
+		if(price < 10000 && price > 1001)
 		{
 			value += 1.f;
 		}
