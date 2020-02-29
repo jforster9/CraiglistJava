@@ -23,9 +23,9 @@ public class CarConfig extends Configs
 
 	public static boolean bSalvagedOk;
 	
-	public void load_config() throws InvalidFileFormatException, IOException
+	public static void load_car_config() throws InvalidFileFormatException, IOException
 	{
-		super.load_config();
+		load_config();
 
 		clConfig = new Ini(new File(CAR_CONFIG));
 
@@ -41,7 +41,7 @@ public class CarConfig extends Configs
 		bSalvagedOk = read_bool_entry("dream car", "salvaged");
 	}
 
-	private void read_transmission_config() {
+	private static void read_transmission_config() {
 		Ini.Section section = clConfig.get("dream car");
 		String trans = section.get("transmission");
 		

@@ -17,7 +17,7 @@ public class Configs
 	public static String[] queries;
 	public static float price;
 
-	public void load_config() throws InvalidFileFormatException, IOException
+	public static void load_config() throws InvalidFileFormatException, IOException
 	{
 		clConfig = new Ini(new File(CRAIGSLIST_CONFIG));
 

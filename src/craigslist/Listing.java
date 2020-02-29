@@ -3,11 +3,11 @@ package craigslist;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Comparator;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
 public class Listing implements Serializable {
 	/**
 	 * 
@@ -176,6 +176,88 @@ public class Listing implements Serializable {
 			
 		return value;
 	}
+
+	public float set_car_value()
+	{
+		content = content.split("keyword")[0];
+		if(!CarConfig.bSalvagedOk 
+			&& attr_title_status.equals("salvage"))
+		{
+			value = 1.f;
+			return value;
+		}
+		if(attr_odometer > CarConfig.odometer)
+		{
+			value = -1.f;
+			return value;
+		}
+		else if(attr_odometer > (CarConfig.odometer * 0.90))
+		{
+			value -= 3f;
+		}
+		else if(attr_odometer > (CarConfig.odometer * 0.75))
+		{
+			value -= 2.f;
+		}
+		else if(attr_odometer > (CarConfig.odometer * 0.60))
+		{
+			value -= 1f;
+		}
+		
+		for(String key : CarConfig.unwantedModels) 
+		{
+			if(title.contains(key) || attr_make_model.contains(key))
+			{
+				value = -1f;
+				return value;
+			}
+		}
+		for(String key : CarConfig.models) 
+		{
+			if(title.contains(key) || attr_make_model.contains(key))
+				value += 2f;
+		}
+		for(String key : CarConfig.years) 
+		{
+			if(title.contains(key) || attr_make_model.contains(key))
+			{
+				value += 1f;
+				break;
+			}
+		}
+		for(String key : CarConfig.goodKeywords) 
+		{
+			if(content.contains(key))
+				value += 1.f;
+		}
+		for(String key : CarConfig.badKeywords) 
+		{
+			if(title.contains(key) || attr_make_model.contains(key)
+					|| content.contains(key))
+				value -= 1.f;
+		}
+		for (String key : CarConfig.transmission) {
+			if (title.contains(key) || attr_make_model.contains(key)) {
+				value += 1f;
+				break;
+			}
+		}
+		float softPriceLimit = CarConfig.price * 0.9f;
+		if (price < softPriceLimit && price > 0)
+		{
+			value += 1.f;
+		}
+		else if(price > softPriceLimit && price < CarConfig.price)
+		{
+			value += 0.5f;
+		}
+		if(price > CarConfig.price)
+		{
+			value = -1.f;
+		}
+		return value;
+	}
+
 	public float set_sedan_value()
 	{
 		String[] models = {"sedan", "coupe", "jetta", "honda", "mazda",

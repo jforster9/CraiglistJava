@@ -5,18 +5,19 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Vector;
 
+import org.apache.commons.io.FileUtils;
+import org.ini4j.InvalidFileFormatException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import craigslist.SearchPage.Category;
-
-import java.util.*;
-
-import org.apache.commons.io.FileUtils;
 
 public class FetchListings {
 	static int MAX_THREADS = 8;
@@ -208,7 +209,7 @@ public class FetchListings {
 	{
 		if(goodListings.size() > 0)
 		{
-			String body = "New Sportwagen Listings: \n";
+			String body = "New Car Listings: \n";
 			for(Listing goodListing : goodListings)
 			{
 				body += goodListing.region + "\n" + goodListing.title + ": " + goodListing.url + "\n";
@@ -276,7 +277,8 @@ public class FetchListings {
 			e.printStackTrace();
 		}
 	}
-	public static void main(String[] args) {
+
+	public static void main(String[] args) throws InvalidFileFormatException, IOException {
 		// Regions to search
 		// ex: monterey, sfbay, losangeles, orangecounty
 		// bakersfield, sacramento, slo, sandiego
@@ -310,11 +312,13 @@ public class FetchListings {
 		Vector<Listing> listings;
 		// pull new listings from craigslist? (false to use ones from DB)
 		boolean getNewListings = true;
+		CarConfig.load_car_config();
 		if(getNewListings)
 		{
 			if(DEV_MODE)
 				db.deleteOldListings();
-			Vector<SearchPage> searchPages = generateSearchPages(regions, queries, pages, Category.CARS_AND_TRUCKS);
+			Vector<SearchPage> searchPages = generateSearchPages(CarConfig.regions, CarConfig.queries, pages,
+					Category.CARS_AND_TRUCKS);
 			System.out.println("Generated " + searchPages.size() + " search pages.");
 			Vector<String> listingUrls = searchPageToListingUrl(searchPages);
 			System.out.println("Generated " + listingUrls.size() + " listings.");
@@ -332,7 +336,7 @@ public class FetchListings {
 		System.out.println("Loaded " + Integer.toString(listings.size()) + " listings from DB");
 		for(Listing listing : listings)
 		{
-			listing.set_sportwagen_value();
+			listing.set_car_value();
 		}
 		System.out.println("Done setting values.");
 		// sort by value (highest first)
