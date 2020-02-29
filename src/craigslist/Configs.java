@@ -11,9 +11,10 @@ import java.util.Scanner;
 import java.util.Vector;
 import java.util.Comparator;
 
-public class Configs implements Serializable
+public class Configs
 {
 	private static final String CONFIG_DIR = "config/";
+	private static final String QUERIES_CONFIG = "searches.cfg";
 	private static final String GOOD_KEYWORDS_CONFIG = "good_keywords.cfg";
 	private static final String BAD_KEYWORDS_CONFIG = "bad_keywords.cfg";
 	private static final String YEARS_CONFIG = "years.cfg";
@@ -24,6 +25,26 @@ public class Configs implements Serializable
 	private static final String TRANSMISSION_CONFIG = "transmission.cfg";
 	private static final String PRICES_CONFIG = "prices.cfg";
 	private static final String ODO_CONFIG = "odo.cfg";
+	
+	public static String[] queries;
+	public static String[] goodKeywords;
+	public static String[] badKeywords;
+	public static String[] years;
+	public static String[] models;
+	public static String[] unwantedModels;
+	public static String[] transmission;
+	public static int[] prices;
+	public static int[] odo;
+	
+	public static void load_config()
+	{
+		goodKeywords = read_string_config(GOOD_KEYWORDS_CONFIG);
+		badKeywords = read_string_config(BAD_KEYWORDS_CONFIG);
+		years = read_years();
+		transmission = read_transmission();
+		prices = read_prices();
+		odo = read_odos();
+	}
 
 	private static String[] read_string_config(String configFile)
 	{
@@ -46,37 +67,17 @@ public class Configs implements Serializable
 		return configData;
 	}
 
-	public static String[] read_good_keywords()
-	{
-		return read_string_config(GOOD_KEYWORDS_CONFIG);
-	}
-
-	public static String[] read_bad_keywords()
-	{
-		return read_string_config(BAD_KEYWORDS_CONFIG);
-	}
-
-	public static String[] read_models()
-	{
-		return read_string_config(MODELS_CONFIG);
-	}
-
-	public static String[] read_unwanted_models()
-	{
-		return read_string_config(UNWANTED_MODELS_CONFIG);
-	}
-
-	public static String[] read_years()
+	private static String[] read_years()
 	{
 		return null;
 	}
 
-	public static String[] read_transmission()
+	private static String[] read_transmission()
 	{
 		return null;
 	}
 
-	public static int[] read_price()
+	private static int[] read_prices()
 	{
 		int[] prices = null;
 
@@ -93,7 +94,7 @@ public class Configs implements Serializable
 		return prices;
 	}
 
-	public static int[] read_odos()
+	private static int[] read_odos()
 	{
 		int[] odos = null;
 
