@@ -1,4 +1,4 @@
-package craigslist.configs;
+package craigslist;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +12,7 @@ public class CarConfig extends Configs
 
 	// Good results
 	public static String[] models;
-	public static String transmission;
+	public static String[] transmission;
 	public static int odometer;
 	public static String[] years;
 	public static String[] goodKeywords;
@@ -20,20 +20,46 @@ public class CarConfig extends Configs
 	// Bad results
 	public static String[] badKeywords;
 	public static String[] unwantedModels;
+
+	public static boolean bSalvagedOk;
 	
 	public void load_config() throws InvalidFileFormatException, IOException
 	{
 		super.load_config();
-		
+
 		clConfig = new Ini(new File(CAR_CONFIG));
-		
+
 		models = read_multiple_string_entries("models", "model");
-		transmission = read_string_entry("dream car", "transmission");
+		read_transmission_config();
 		odometer = read_int_entry("dream car", "max odometer");
 		years = read_multiple_string_entries("years", "year");
 		goodKeywords = read_multiple_string_entries("good keywords", "key");
-		
+
 		badKeywords = read_multiple_string_entries("bad keywords", "key");
 		unwantedModels = read_multiple_string_entries("unwanted models", "model");
+
+		bSalvagedOk = read_bool_entry("dream car", "salvaged");
+	}
+
+	private void read_transmission_config() {
+		Ini.Section section = clConfig.get("dream car");
+		String trans = section.get("transmission");
+		
+		if(trans.equals("manual"))
+		{
+			String[] tmp = { "manual transmission", "6 speed manual", "manual", "6 speed", "6-speed", "6mt",
+					"six speed", "stick shift", "manual trans", "transmission manual", "transmission: manual" };
+			transmission = tmp;
+		}
+		else if(trans.equals("automatic"))
+		{
+			String[] tmp = { "6a", "transmission: automatic", "automatic 6-speed", "6 speed auto", "auto trans", "a/t",
+					"6-speed a/t", "auto 6-spd", "transmission : automatic" };
+			transmission = tmp;
+		}
+		else
+		{
+			transmission = null;
+		}
 	}
 }
