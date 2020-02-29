@@ -237,8 +237,14 @@ public class Listing implements Serializable {
 				value -= 1.f;
 		}
 		for (String key : CarConfig.transmission) {
-			if (title.contains(key) || attr_make_model.contains(key)) {
+			if (title.contains(key) || attr_make_model.contains(key) || attr_transmission.contains(key)) {
 				value += 1f;
+				break;
+			}
+		}
+		for (String key : CarConfig.badTransmission) {
+			if (title.contains(key) || attr_make_model.contains(key) || attr_transmission.contains(key)) {
+				value -= 1f;
 				break;
 			}
 		}

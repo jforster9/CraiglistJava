@@ -69,6 +69,7 @@ public class Configs
 	
 	private static void read_category()
 	{
+		// TODO: fix categories to figure out the extension
 		Ini.Section section = clConfig.get("for sale");
 		category = section.get("category", String.class);
 

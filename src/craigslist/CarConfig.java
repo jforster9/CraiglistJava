@@ -20,6 +20,7 @@ public class CarConfig extends Configs
 	// Bad results
 	public static String[] badKeywords;
 	public static String[] unwantedModels;
+	public static String[] badTransmission;
 
 	public static boolean bSalvagedOk;
 	
@@ -41,25 +42,29 @@ public class CarConfig extends Configs
 		bSalvagedOk = read_bool_entry("dream car", "salvaged");
 	}
 
+	private static final String[] MANUAL = { "manual transmission", "6 speed manual", "manual", "6 speed", "6-speed",
+			"6mt", "six speed", "stick shift", "manual trans", "transmission manual", "transmission: manual" };
+	private static final String[] AUTO = { "6a", "transmission: automatic", "automatic 6-speed", "6 speed auto",
+			"auto trans", "a/t", "6-speed a/t", "auto 6-spd", "transmission : automatic" };
+
 	private static void read_transmission_config() {
 		Ini.Section section = clConfig.get("dream car");
 		String trans = section.get("transmission");
-		
+
 		if(trans.equals("manual"))
 		{
-			String[] tmp = { "manual transmission", "6 speed manual", "manual", "6 speed", "6-speed", "6mt",
-					"six speed", "stick shift", "manual trans", "transmission manual", "transmission: manual" };
-			transmission = tmp;
+			transmission = MANUAL;
+			badTransmission = AUTO;
 		}
 		else if(trans.equals("automatic"))
 		{
-			String[] tmp = { "6a", "transmission: automatic", "automatic 6-speed", "6 speed auto", "auto trans", "a/t",
-					"6-speed a/t", "auto 6-spd", "transmission : automatic" };
-			transmission = tmp;
+
+			transmission = AUTO;
+			badTransmission = MANUAL;
 		}
 		else
 		{
-			transmission = null;
+			transmission = badTransmission = null;
 		}
 	}
 }

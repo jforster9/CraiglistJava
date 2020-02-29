@@ -287,6 +287,7 @@ public class FetchListings {
 	}
 
 	public static void main(String[] args) throws InvalidFileFormatException, IOException {
+		// TODO: clean up hardcoding to car finder
 		// Regions to search
 		// ex: monterey, sfbay, losangeles, orangecounty
 		// bakersfield, sacramento, slo, sandiego
