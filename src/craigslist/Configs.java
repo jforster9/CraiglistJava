@@ -1,6 +1,5 @@
 package craigslist;
 
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.Serializable;
@@ -10,6 +9,8 @@ import java.util.Properties;
 import java.util.Scanner;
 import java.util.Vector;
 import java.util.Comparator;
+import org.ini4j.Config;
+import org.ini4j.Ini;
 
 public class Configs
 {
