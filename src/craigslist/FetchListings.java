@@ -333,6 +333,7 @@ public class FetchListings {
 		}
 		//listings = makeUnique(listings);
 		System.out.println("Loaded " + Integer.toString(listings.size()) + " listings from DB");
+		// TODO: add threads for calculating values
 		for(Listing listing : listings)
 		{
 			listing.set_car_value();
@@ -350,6 +351,7 @@ public class FetchListings {
 		}
 		Vector<Listing> goodListings = new Vector<Listing>();
         Vector<String> allListingUrls = new Vector<String>();
+		// TODO: threads for parsing listings for DB
 		for(Listing listing : listings)
 		{
         	allListingUrls.add(listing.url);
