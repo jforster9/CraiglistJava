@@ -177,6 +177,18 @@ public class Listing implements Serializable {
 		return value;
 	}
 
+	private void calculate_price_value() {
+		float softPriceLimit = Configs.price * 0.8f;
+		if (price < softPriceLimit && price > 0) {
+			value += 1.f;
+		} else if (price > softPriceLimit && price < Configs.price) {
+			value += 0.5f;
+		}
+		if (price > Configs.price) {
+			value = -1.f;
+		}
+	}
+
 	public float set_car_value()
 	{
 		content = content.split("keyword")[0];
@@ -248,19 +260,9 @@ public class Listing implements Serializable {
 				break;
 			}
 		}
-		float softPriceLimit = CarConfig.price * 0.9f;
-		if (price < softPriceLimit && price > 0)
-		{
-			value += 1.f;
-		}
-		else if(price > softPriceLimit && price < CarConfig.price)
-		{
-			value += 0.5f;
-		}
-		if(price > CarConfig.price)
-		{
-			value = -1.f;
-		}
+
+		calculate_price_value();
+
 		return value;
 	}
 
