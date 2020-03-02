@@ -200,6 +200,13 @@ public class Listing implements Serializable {
 		}
 	}
 
+	public float set_listing_value() {
+		calculate_keyword_value();
+		calculate_price_value();
+
+		return value;
+	}
+
 	public float set_car_value()
 	{
 		content = content.split("keyword")[0];
@@ -248,9 +255,6 @@ public class Listing implements Serializable {
 				break;
 			}
 		}
-
-		calculate_keyword_value();
-
 		for (String key : CarConfig.transmission) {
 			if (title.contains(key) || attr_make_model.contains(key) || attr_transmission.contains(key)) {
 				value += 1f;
@@ -264,7 +268,7 @@ public class Listing implements Serializable {
 			}
 		}
 
-		calculate_price_value();
+		set_listing_value();
 
 		return value;
 	}
