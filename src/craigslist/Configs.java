@@ -17,6 +17,9 @@ public class Configs
 	public static String[] queries;
 	public static float price;
 
+	public static String[] goodKeywords;
+	public static String[] badKeywords;
+
 	public static void load_config() throws InvalidFileFormatException, IOException
 	{
 		clConfig = new Ini(new File(CRAIGSLIST_CONFIG));
@@ -25,6 +28,9 @@ public class Configs
 		price = read_float_entry("for sale", "max price");
 		regions = read_multiple_string_entries("regions", "loc");
 		queries = read_multiple_string_entries("searches", "key");
+
+		goodKeywords = read_multiple_string_entries("good keywords", "key");
+		badKeywords = read_multiple_string_entries("bad keywords", "key");
 	}
 
 	protected static String read_string_entry(String sectionName, String option)

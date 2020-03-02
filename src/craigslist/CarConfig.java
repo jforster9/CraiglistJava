@@ -15,10 +15,8 @@ public class CarConfig extends Configs
 	public static String[] transmission;
 	public static int odometer;
 	public static String[] years;
-	public static String[] goodKeywords;
 
 	// Bad results
-	public static String[] badKeywords;
 	public static String[] unwantedModels;
 	public static String[] badTransmission;
 
@@ -34,9 +32,6 @@ public class CarConfig extends Configs
 		read_transmission_config();
 		odometer = read_int_entry("dream car", "max odometer");
 		years = read_multiple_string_entries("years", "year");
-		goodKeywords = read_multiple_string_entries("good keywords", "key");
-
-		badKeywords = read_multiple_string_entries("bad keywords", "key");
 		unwantedModels = read_multiple_string_entries("unwanted models", "model");
 
 		bSalvagedOk = read_bool_entry("dream car", "salvaged");

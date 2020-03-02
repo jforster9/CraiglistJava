@@ -177,6 +177,17 @@ public class Listing implements Serializable {
 		return value;
 	}
 
+	private void calculate_keyword_value() {
+		for (String key : Configs.goodKeywords) {
+			if (content.contains(key))
+				value += 1.f;
+		}
+		for (String key : Configs.badKeywords) {
+			if (title.contains(key) || attr_make_model.contains(key) || content.contains(key))
+				value -= 1.f;
+		}
+	}
+
 	private void calculate_price_value() {
 		float softPriceLimit = Configs.price * 0.8f;
 		if (price < softPriceLimit && price > 0) {
@@ -237,17 +248,9 @@ public class Listing implements Serializable {
 				break;
 			}
 		}
-		for(String key : CarConfig.goodKeywords) 
-		{
-			if(content.contains(key))
-				value += 1.f;
-		}
-		for(String key : CarConfig.badKeywords) 
-		{
-			if(title.contains(key) || attr_make_model.contains(key)
-					|| content.contains(key))
-				value -= 1.f;
-		}
+
+		calculate_keyword_value();
+
 		for (String key : CarConfig.transmission) {
 			if (title.contains(key) || attr_make_model.contains(key) || attr_transmission.contains(key)) {
 				value += 1f;
